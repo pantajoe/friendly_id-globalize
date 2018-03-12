@@ -1,4 +1,5 @@
 require 'i18n'
+require_relative 'globalize/history'
 
 module FriendlyId
 
