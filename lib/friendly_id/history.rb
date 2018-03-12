@@ -1,4 +1,4 @@
-module FriendlyId
+module FriendlyId::Globalize
 
 =begin
 
@@ -57,7 +57,7 @@ method.
     def self.setup(model_class)
       model_class.instance_eval do
         friendly_id_config.use :slugged
-        friendly_id_config.finder_methods = FriendlyId::History::FinderMethods
+        friendly_id_config.finder_methods = FriendlyId::Globalize::History::FinderMethods
         if friendly_id_config.uses? :finders
           relation.class.send(:include, friendly_id_config.finder_methods)
           if ActiveRecord::VERSION::MAJOR == 4 && ActiveRecord::VERSION::MINOR == 2
@@ -70,10 +70,10 @@ method.
     # Configures the model instance to use the History add-on.
     def self.included(model_class)
       model_class.class_eval do
-        has_many :slugs, -> {order("#{Slug.quoted_table_name}.id DESC")}, {
+        has_many :slugs, -> {order("#{FriendlyId::Slug.quoted_table_name}.id DESC")}, {
           :as         => :sluggable,
           :dependent  => :destroy,
-          :class_name => Slug.to_s
+          :class_name => FriendlyId::Slug.to_s
         }
         after_save :create_slug
       end
@@ -94,11 +94,11 @@ method.
       end
 
       def slug_table_record(id)
-        select(quoted_table_name + '.*').joins(:slugs).where(slug_history_clause(id)).order(Slug.arel_table[:id].desc).first
+        select(quoted_table_name + '.*').joins(:slugs).where(slug_history_clause(id)).order(FriendlyId::Slug.arel_table[:id].desc).first
       end
 
       def slug_history_clause(id)
-        Slug.arel_table[:sluggable_type].eq(base_class.to_s).and(Slug.arel_table[:slug].eq(id)).and(Slug.arel_table[:locale].eq(::Globalize.locale))
+        FriendlyId::Slug.arel_table[:sluggable_type].eq(base_class.to_s).and(FriendlyId::Slug.arel_table[:slug].eq(id)).and(FriendlyId::Slug.arel_table[:locale].eq(::Globalize.locale))
       end
     end
 
@@ -110,9 +110,9 @@ method.
     def scope_for_slug_generator
       relation = super
       return relation if new_record?
-      relation = relation.merge(Slug.where('sluggable_id <> ?', id))
+      relation = relation.merge(FriendlyId::Slug.where('sluggable_id <> ?', id))
       if friendly_id_config.uses?(:scoped)
-        relation = relation.where(Slug.arel_table[:scope].eq(serialized_scope))
+        relation = relation.where(FriendlyId::Slug.arel_table[:scope].eq(serialized_scope))
       end
       relation
     end
