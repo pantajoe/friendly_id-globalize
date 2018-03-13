@@ -31,7 +31,7 @@ method.
 
     class Post < ActiveRecord::Base
       extend FriendlyId
-      friendly_id :title, :use => :history
+      friendly_id :title, use: :history
     end
 
     class PostsController < ApplicationController

@@ -24,7 +24,7 @@ with Globalize:
 class Post < ActiveRecord::Base
   translates :title, :slug
   extend FriendlyId
-  friendly_id :title, :use => :globalize
+  friendly_id :title, use: :globalize
 end
 ```
 Note that call to `translates` must be made before calling `friendly_id`.
