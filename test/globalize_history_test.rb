@@ -30,7 +30,7 @@ class GlobalizeHistoryTest < MiniTest::Test
       assert_equal dummy.slugs.count, 3
       assert_equal de_slug, 'neuer-deutcher-titel'
 
-      found_dummy = :I18n.with_locale(:de) { Dummy.friendly.find('deutscher-titel') }
+      found_dummy = ::I18n.with_locale(:de) { Dummy.friendly.find('deutscher-titel') }
       refute_nil found_dummy
     end
   end

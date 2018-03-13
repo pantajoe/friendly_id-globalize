@@ -6,6 +6,6 @@ class Dummy < ActiveRecord::Base
   friendly_id :title, use: [:slugged, :globalize, :history]
 
   def should_generate_new_friendly_id?
-    title_changed? || super
+    changes.include?('title') || super
   end
 end
