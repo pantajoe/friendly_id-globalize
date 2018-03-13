@@ -4,8 +4,8 @@ gemspec
 
 # Database Configuration
 group :development, :test do
-  gem "globalize", '~> 5.0.0'
-  gem 'friendly_id', '>= 5.2.0'
+  gem "globalize", '~> 5.0.0', '< 6.0.0'
+  gem 'friendly_id', '>= 5.2.0', '< 6.0.0'
   gem 'rake'
 
   platforms :jruby do
