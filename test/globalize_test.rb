@@ -1,53 +1,7 @@
 # encoding: utf-8
-require 'bundler/setup'
-require 'active_record'
-require 'friendly_id'
-require 'friendly_id/globalize'
-require 'globalize'
-require 'minitest/autorun'
+require 'test_helper'
 
-ActiveRecord::Base.establish_connection adapter: 'sqlite3', database: ':memory:'
-::I18n.enforce_available_locales = false
-Globalize.fallbacks = {:en => [:en, :de], :de => [:de, :en]}
-
-class FriendlyIdGlobalizeTest < ActiveRecord::Migration
-  def self.up
-    create_table :articles do |t|
-      t.string   :name
-    end
-  end
-end
-
-ActiveRecord::Migration.verbose = false
-FriendlyIdGlobalizeTest.up
-
-class Article < ActiveRecord::Base
-  translates :slug, :title, fallbacks_for_empty_translations: true
-  accepts_nested_attributes_for :translations
-
-  extend FriendlyId
-  friendly_id :title, :use => [:slugged, :globalize]
-end
-
-Article.create_translation_table! :slug => :string, :title => :string
-
-class Module
-  def test(name, &block)
-    define_method("test_#{name.gsub(/[^a-z0-9']/i, "_")}".to_sym, &block)
-  end
-end
-
-class GlobalizeTest < MiniTest::Unit::TestCase
-
-  def transaction
-    ActiveRecord::Base.transaction { yield ; raise ActiveRecord::Rollback }
-  end
-
-  def with_instance_of(*args)
-    model_class = args.shift
-    args[0] ||= {:name => "a b c"}
-    transaction { yield model_class.create!(*args) }
-  end
+class GlobalizeTest < MiniTest::Test
 
   def setup
     I18n.locale = :en
@@ -110,4 +64,3 @@ class GlobalizeTest < MiniTest::Unit::TestCase
     end
   end
 end
-
