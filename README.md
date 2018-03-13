@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/pantajosef/friendly_id-globalize.svg?branch=master)](https://travis-ci.org/pantajosef/friendly_id-globalize)
+
 # FriendlyId Globalize
 
 [Globalize](https://github.com/globalize/globalize) support for
