@@ -1,7 +1,6 @@
 require 'rails/generators'
-# This creates an initializer that override FriendlyId::History#setup,
-# so use: [:slugged, :history] will still work properly.
-class InitializerGenerator < Rails::Generators::Base
+
+class FriendlyIdGlobalizeInitializerGenerator < Rails::Generators::Base
 
   desc "This creates an initializer that override FriendlyId::History#setup,\n
         so `friendly_id :title, use: [:slugged, :history]` in some models\n
