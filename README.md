@@ -12,7 +12,8 @@ rails generate friendly_id_globalize
 ```
 
 ## IMPORTANT
-It is important to run `rails generate initializer` before starting your application.
+It is important to run `rails generate friendly_id_globalize_initializer`
+before starting your application.
 It provides an initializer that overrides `FriendlyId::History`.
 Only after that, you can still use the history module without using the
 globalize module (for some models in your project).
