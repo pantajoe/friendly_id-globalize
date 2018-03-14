@@ -1,4 +1,5 @@
 require 'i18n'
+require_relative 'globalize/history'
 
 module FriendlyId
 
@@ -20,7 +21,7 @@ with Globalize:
     class Post < ActiveRecord::Base
       translates :title, :slug
       extend FriendlyId
-      friendly_id :title, :use => :globalize
+      friendly_id :title, use: :globalize
     end
 
 === Finds
@@ -112,4 +113,3 @@ current locale:
     end
   end
 end
-

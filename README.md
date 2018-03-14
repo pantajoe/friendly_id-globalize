@@ -11,6 +11,13 @@ gem 'friendly_id-globalize'
 rails generate friendly_id_globalize
 ```
 
+## IMPORTANT
+It is important to run `rails generate friendly_id_globalize_initializer`
+before starting your application.
+It provides an initializer that overrides `FriendlyId::History`.
+Only after that, you can still use the history module without using the
+globalize module (for some models in your project).
+
 ### Translating Slugs Using Globalize
 The `FriendlyId::Globalize Globalize` module lets you use
 [Globalize](https://github.com/globalize/globalize) to translate slugs. This
@@ -26,7 +33,7 @@ with Globalize:
 class Post < ActiveRecord::Base
   translates :title, :slug
   extend FriendlyId
-  friendly_id :title, :use => :globalize
+  friendly_id :title, use: :globalize
 end
 ```
 Note that call to `translates` must be made before calling `friendly_id`.
