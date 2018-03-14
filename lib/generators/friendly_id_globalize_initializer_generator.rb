@@ -6,7 +6,7 @@ class FriendlyIdGlobalizeInitializerGenerator < Rails::Generators::Base
         so `friendly_id :title, use: [:slugged, :history]` in some models\n
         will still work properly."
 
-  source_root File.expand_path("../templates", __FILE__)
+  source_root File.expand_path("../../templates", __FILE__)
 
   def copy_initializer_file
     copy_file "history.rb", "config/initializers/history.rb"
